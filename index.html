@@ -38,17 +38,16 @@
 </head>
 <body>
   <script>
-    const AS_URL_BASE = "https://script.google.com/macros/s/AKfycbw-sXPRt-otBkdduObgZz6IfpIJY8n7wf6D-dCDgxA1tkxgKkVAzLuDmBsph8neFoHV/exec";
+  const AS_URL_BASE = "https://script.google.com/macros/s/AKfycbw-sXPRt-otBkdduObgZz6IfpIJY8n7wf6D-dCDgxA1tkxgKkVAzLuDmBsph8neFoHV/exec/exec";
 
-    // Detect if the user is on an iOS device
-    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  // Detect if the user is on an iOS device
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 
-    // Adjust the logic for extracting 'k'
-    var url = document.location.href;
-    var k = url.substr(url.lastIndexOf("k=") + (isIOS ? 3 : 2));
-    
-    if (k) {
-      fetch(AS_URL_BASE + '?k=' + k)
+  var url = document.location.href;
+  var k = url.substr(url.lastIndexOf("k=") + 2);
+
+  if (k) {
+    fetch(`${AS_URL_BASE}?k=${k}&ios=${isIOS}`)
       .then(r => r.text())
       .then((r) => {
         console.log(r);
@@ -57,8 +56,9 @@
         }
       })
       .catch(err => console.log(err));
-    }
-  </script>
+  }
+</script>
+
   
   <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
 </body>
