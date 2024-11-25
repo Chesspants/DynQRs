@@ -1,9 +1,3 @@
-<?php 
-// Detect the user agent
-$ua = strtolower($_SERVER['HTTP_USER_AGENT']);
-$is_ios = (strpos($ua, 'iphone') !== false || strpos($ua, 'ipod') !== false || strpos($ua, 'ipad') !== false);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,9 +40,12 @@ $is_ios = (strpos($ua, 'iphone') !== false || strpos($ua, 'ipod') !== false || s
   <script>
     const AS_URL_BASE = "https://script.google.com/macros/s/AKfycbw-sXPRt-otBkdduObgZz6IfpIJY8n7wf6D-dCDgxA1tkxgKkVAzLuDmBsph8neFoHV/exec";
 
-    // Adjust the logic for extracting 'k' based on PHP's determination of iOS
+    // Detect if the user is on an iOS device
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+    // Adjust the logic for extracting 'k'
     var url = document.location.href;
-    var k = url.substr(url.lastIndexOf("k=") + <?php echo $is_ios ? '3' : '2'; ?>);
+    var k = url.substr(url.lastIndexOf("k=") + (isIOS ? 3 : 2));
     
     if (k) {
       fetch(AS_URL_BASE + '?k=' + k)
